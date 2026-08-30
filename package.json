@@ -1,0 +1,12 @@
+{
+  "name": "orbit-react-root",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix orbit-react run dev",
+    "start": "npm --prefix orbit-react run dev",
+    "build": "npm --prefix orbit-react run build",
+    "lint": "npm --prefix orbit-react run lint",
+    "preview": "npm --prefix orbit-react run preview",
+    "postinstall": "npm --prefix orbit-react install"
+  }
+}
