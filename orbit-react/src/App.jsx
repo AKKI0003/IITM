@@ -14,25 +14,65 @@ import FAQ from "./components/FAQ";
 import Contact from "./components/Contact";
 import Feedback from "./components/Feedback";
 import Footer from "./components/Footer";
+import Reveal from "./components/ui/reveal";
+import SectionDivider from "./components/ui/section-divider";
+
+// Paper/mist hex values must match the Tailwind tokens in
+// tailwind.config.js (colors.paper / colors.mist) since inline SVG
+// `fill` can't read Tailwind's CSS variables directly.
+const PAPER = "#FBFBF9";
+const MIST = "#EEF1F0";
 
 export default function App() {
   return (
     <>
       <NoticeBanner />
       <Navbar />
+
+      {/* Hero is full-bleed ink-navy; divider bridges it into the
+          paper-toned About section instead of a hard 1px cut. */}
       <Hero />
+      <SectionDivider to={PAPER} />
+
       <About />
-      <Services />
+
+      <Reveal>
+        <Services />
+      </Reveal>
+
+      {/* Emergency is also full-bleed ink-navy — bridge in both
+          directions so it doesn't feel like a dropped-in black box. */}
+      <SectionDivider to="#0E1B2B" flip />
       <Emergency />
-      <Transport />
-      <Tourism />
-      <Events />
-      <News />
-      <Departments />
-      <Gallery />
-      <FAQ />
-      <Contact />
-      <Feedback />
+      <SectionDivider to={PAPER} />
+
+      <Reveal>
+        <Transport />
+      </Reveal>
+      <Reveal>
+        <Tourism />
+      </Reveal>
+      <Reveal>
+        <Events />
+      </Reveal>
+      <Reveal>
+        <News />
+      </Reveal>
+      <Reveal>
+        <Departments />
+      </Reveal>
+      <Reveal>
+        <Gallery />
+      </Reveal>
+      <Reveal>
+        <FAQ />
+      </Reveal>
+      <Reveal>
+        <Contact />
+      </Reveal>
+      <Reveal>
+        <Feedback />
+      </Reveal>
       <Footer />
     </>
   );

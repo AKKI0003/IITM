@@ -1,5 +1,6 @@
 import Container from "./Container";
 import SectionHeader from "./SectionHeader";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "./ui/accordion";
 
 const faqs = [
   {
@@ -30,17 +31,27 @@ export default function FAQ() {
           description="Quick answers regarding online services, DigiLocker certificates, tax payments, and grievance tracking."
         />
 
-        <div className="grid gap-4 max-w-[820px]">
-          {faqs.map((f) => (
-            <div key={f.q} className="border border-line rounded-xl px-6 py-5 bg-paper shadow-xs hover:border-transit-teal/40 transition-colors">
-              <h3 className="text-[1.02rem] font-display font-semibold text-ink-navy mb-2.5 flex gap-2.5 items-start">
-                <span className="font-mono text-civic-amber-dark font-bold text-lg leading-none mt-0.5">Q.</span>
-                <span>{f.q}</span>
-              </h3>
-              <p className="text-[0.92rem] text-slate-light leading-relaxed pl-6">{f.a}</p>
-            </div>
+        {/* Radix Accordion: only one answer open at a time, full
+            keyboard support (Home/End/Arrow keys), animated height via
+            the --radix-accordion-content-height CSS var + keyframes
+            defined in index.css. */}
+        <Accordion type="single" collapsible defaultValue="" className="grid gap-4 max-w-[820px]">
+          {faqs.map((f, i) => (
+            <AccordionItem key={f.q} value={`item-${i}`}>
+              <AccordionTrigger>
+                <span className="flex gap-2.5 items-start text-[1.02rem]">
+                  <span className="font-mono text-civic-amber-dark font-bold text-lg leading-none mt-0.5">
+                    Q.
+                  </span>
+                  <span>{f.q}</span>
+                </span>
+              </AccordionTrigger>
+              <AccordionContent>
+                <p className="leading-relaxed pl-6">{f.a}</p>
+              </AccordionContent>
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
       </Container>
     </section>
   );
