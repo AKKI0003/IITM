@@ -1,6 +1,6 @@
 import Container from "./Container";
-import IconBadge from "./IconBadge";
 import { IconPin, IconPhone, IconMail } from "./Icons";
+import IconBadge from "./IconBadge";
 
 const rows = [
   {
@@ -42,14 +42,17 @@ export default function Contact() {
               Our citizen helpdesk & Integrated Command and Control Centre (ICCC) is operational Monday to Saturday, 9:00 AM – 6:00 PM IST.
             </p>
 
-            <div className="grid gap-5 mt-7">
-              {rows.map((r) => (
-                <div key={r.title} className="flex gap-4 items-start bg-paper p-4 rounded-lg border border-line/70 shadow-xs">
+            <div className="grid gap-0 mt-8">
+              {rows.map((r, i) => (
+                <div key={r.title} className="flex gap-4 items-start py-5 border-t border-line/70 last:border-b">
+                  <span className="font-mono text-[0.75rem] text-slate-light pt-1 w-5 flex-shrink-0">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                   <IconBadge icon={r.icon} variant={r.variant} className="flex-shrink-0" />
                   <div>
                     <h4 className="text-[0.94rem] font-semibold text-ink-navy mb-[2px]">{r.title}</h4>
                     <p className="text-[0.9rem] text-slate-light font-medium">{r.text}</p>
-                    {r.subtext && <p className="text-[0.8rem] text-transit-teal font-mono mt-1">{r.subtext}</p>}
+                    {r.subtext && <p className="text-[0.8rem] text-transit-teal-dark font-mono mt-1">{r.subtext}</p>}
                   </div>
                 </div>
               ))}

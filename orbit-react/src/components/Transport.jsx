@@ -1,33 +1,24 @@
+import { motion } from "framer-motion";
 import Container from "./Container";
 import SectionHeader from "./SectionHeader";
-import IconBadge from "./IconBadge";
-import { IconMetro, IconBus, IconCab, IconParking } from "./Icons";
 
 const items = [
   {
-    icon: IconMetro,
-    variant: "teal",
     title: "Metro Rail (NCMC)",
     text: "4 operational lines, 62 elevated/underground stations with National Common Mobility Card & UPI ticketing.",
     badge: "Every 4 mins",
   },
   {
-    icon: IconBus,
-    variant: "amber",
     title: "Smart EV City Buses",
     text: "250+ zero-emission electric bus routes connecting all 12 wards and suburban transit hubs with live GPS tracking.",
     badge: "GPS Live",
   },
   {
-    icon: IconCab,
-    variant: "navy",
     title: "Prepaid Auto & EV Cabs",
     text: "Metered prepaid smart auto booths and on-demand electric cab stands at all major railway & metro stations.",
     badge: "Regulated Fares",
   },
   {
-    icon: IconParking,
-    variant: "teal",
     title: "FASTag Smart Parking",
     text: "42 contactless FASTag-enabled public multi-level parking lots with live smartphone slot availability.",
     badge: "FASTag Enabled",
@@ -44,28 +35,28 @@ export default function Transport() {
           description="Integrated multimodal transport network connecting every corner of Orbit Smart City seamlessly."
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {items.map((t) => (
-            <div
+        {/* Sticky-index editorial list — a moving transit "route line"
+            on the left replaces four identical boxed cards. */}
+        <div className="relative">
+          <div className="absolute left-[7px] top-2 bottom-2 w-px bg-line hidden sm:block" aria-hidden="true" />
+          {items.map((t, i) => (
+            <motion.div
               key={t.title}
-              className="group bg-paper border border-line rounded-xl p-6 flex flex-col justify-between shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+              initial={{ opacity: 0, x: -14 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className="relative grid grid-cols-1 sm:grid-cols-[16px_1fr_auto] gap-3 sm:gap-8 items-start sm:items-center py-7 border-b border-line"
             >
+              <span className="hidden sm:block w-[15px] h-[15px] rounded-full bg-civic-amber ring-4 ring-paper" />
               <div>
-                <div className="flex items-center justify-between mb-3">
-                  <IconBadge icon={t.icon} variant={t.variant} />
-                  <span className="font-mono text-[0.66rem] uppercase tracking-wider text-transit-teal bg-transit-teal/10 px-2 py-0.5 rounded font-semibold">
-                    {t.badge}
-                  </span>
-                </div>
-                <h3 className="text-base font-display font-bold text-ink-navy mb-2">{t.title}</h3>
-                <p className="text-[0.88rem] text-slate-light leading-relaxed">{t.text}</p>
+                <h3 className="text-[1.15rem] font-display font-bold text-ink-navy">{t.title}</h3>
+                <p className="text-[0.9rem] text-slate-light leading-relaxed mt-1.5 max-w-[520px]">{t.text}</p>
               </div>
-              <div className="mt-4 pt-3 border-t border-line/60">
-                <a href="#transport" className="text-[0.82rem] font-semibold text-transit-teal hover:text-transit-teal-dark">
-                  View Timetable & Map →
-                </a>
-              </div>
-            </div>
+              <span className="font-mono text-[0.68rem] uppercase tracking-wider text-civic-amber-dark font-semibold whitespace-nowrap">
+                {t.badge}
+              </span>
+            </motion.div>
           ))}
         </div>
       </Container>

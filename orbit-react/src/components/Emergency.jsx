@@ -1,57 +1,125 @@
+import { motion } from "framer-motion";
 import Container from "./Container";
-import { IconShield, IconFlame, IconCross, IconAlert } from "./Icons";
+import { pushAlert } from "../lib/alertBus";
 
 const items = [
-  { icon: IconShield, title: "Police / Emergency", num: "112 / 100", desc: "Immediate police assistance & national emergency" },
-  { icon: IconFlame, title: "Fire & Rescue", num: "101", desc: "Fire accidents, hazard control & rescue operations" },
-  { icon: IconCross, title: "Ambulance / Health", num: "108 / 102", desc: "24x7 emergency medical response & trauma care" },
-  { icon: IconAlert, title: "Disaster Helpline", num: "1077", desc: "Flood, cyclone & natural calamity control room" },
+  { title: "Police / Emergency", num: "112 / 100", desc: "Immediate police assistance & national emergency" },
+  { title: "Fire & Rescue", num: "101", desc: "Fire accidents, hazard control & rescue operations" },
+  { title: "Ambulance / Health", num: "108 / 102", desc: "24x7 emergency medical response & trauma care" },
+  { title: "Disaster Helpline", num: "1077", desc: "Flood, cyclone & natural calamity control room" },
 ];
 
+const secondary = [
+  ["Women Helpline", "1091 / 181"],
+  ["Childline", "1098"],
+  ["Power Outage", "1912"],
+  ["Water Leakage", "1916"],
+];
+
+const demoAlerts = {
+  critical: { priority: "critical", title: "Flash flood warning — Ward 9", message: "ICCC sensors report rapid water-level rise near Riverside Colony. Avoid underpasses." },
+  warning: { priority: "warning", title: "Traffic diversion — MG Road", message: "Metro construction has narrowed MG Road to one lane near Sector 4." },
+  info: { priority: "info", title: "Jal Board maintenance", message: "Scheduled water supply maintenance in Ward 7–12, Saturday 6–10 AM." },
+};
+
 export default function Emergency() {
+  // Fires two similar alerts a beat apart so the merge behaviour (count
+  // badge instead of a second card) is visible without waiting.
+  const fireDuplicateBurst = () => {
+    pushAlert(demoAlerts.warning);
+    setTimeout(() => pushAlert(demoAlerts.warning), 700);
+  };
+
   return (
     <section id="emergency" className="py-16 lg:py-section bg-ink-navy text-paper">
       <Container>
-        <div className="max-w-[640px] mb-12">
-          <span className="inline-block font-mono text-[0.72rem] tracking-[0.14em] uppercase text-[#ff8a80] bg-signal-red/[.18] px-[10px] py-1 rounded-full mb-[14px]">
-            24x7 Emergency Services
-          </span>
-          <h2 className="text-[1.7rem] md:text-[2.4rem] font-display font-bold mb-3">Help, when it matters most.</h2>
-          <p className="text-paper/[.65] text-[1.02rem]">
-            Direct lines to Orbit Smart City's emergency response and disaster management teams across India, available around the clock.
+        <div className="flex items-center justify-between flex-wrap gap-4 mb-14">
+          <div className="max-w-[560px]">
+            <span className="inline-flex items-center gap-1.5 font-mono text-[0.72rem] tracking-[0.14em] uppercase text-[#ff8a80] mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#ff8a80] animate-pulse" />
+              24x7 Emergency Services
+            </span>
+            <h2 className="text-[1.9rem] md:text-[2.6rem] font-display font-bold leading-tight">
+              Help, when it matters most.
+            </h2>
+          </div>
+          <p className="text-paper/60 text-[0.98rem] max-w-[320px]">
+            Direct lines to Orbit Smart City's emergency response and disaster management teams, available around the clock.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {items.map((e) => (
-            <div
+        {/* Open, undivided rows instead of four identical boxes — the
+            phone number carries the hierarchy, not a card border. */}
+        <div>
+          {items.map((e, i) => (
+            <motion.a
               key={e.title}
-              className="bg-ink-navy-soft border border-white/[.08] rounded-xl p-6 text-center hover:border-signal-red/50 transition-colors flex flex-col justify-between"
+              href={`tel:${e.num.split("/")[0].trim()}`}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ duration: 0.5, delay: i * 0.06 }}
+              className="group grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2 sm:gap-8 items-center py-6 border-t border-paper/10 last:border-b hover:pl-2 transition-[padding] duration-300"
             >
               <div>
-                <div className="w-[48px] h-[48px] rounded-[10px] flex items-center justify-center bg-signal-red/[.16] text-[#ff8a80] mx-auto mb-4">
-                  <e.icon className="w-[24px] h-[24px]" />
-                </div>
-                <h3 className="text-paper text-[1.05rem] font-display font-semibold mb-1">{e.title}</h3>
-                <p className="text-[0.78rem] text-paper/60 mb-3">{e.desc}</p>
+                <h3 className="text-paper text-[1.15rem] sm:text-[1.3rem] font-display font-semibold group-hover:text-[#ff8a80] transition-colors">
+                  {e.title}
+                </h3>
+                <p className="text-[0.86rem] text-paper/55 mt-1">{e.desc}</p>
               </div>
-              <div>
-                <a
-                  href={`tel:${e.num.split('/')[0].trim()}`}
-                  className="font-mono text-[1.35rem] font-bold text-civic-amber block mt-2 py-1 px-3 bg-white/5 rounded hover:bg-civic-amber hover:text-ink-navy transition-colors"
-                >
-                  {e.num}
-                </a>
-              </div>
-            </div>
+              <span className="font-mono text-[1.7rem] sm:text-[2.1rem] font-bold text-civic-amber tracking-tight whitespace-nowrap">
+                {e.num}
+              </span>
+            </motion.a>
           ))}
         </div>
 
-        <div className="mt-8 p-4 rounded-xl bg-ink-navy-soft/60 border border-white/[.06] flex flex-wrap items-center justify-between gap-4 text-[0.85rem] text-paper/70 font-mono">
-          <span>👩 Women Helpline: <strong className="text-civic-amber">1091 / 181</strong></span>
-          <span>👶 Childline: <strong className="text-civic-amber">1098</strong></span>
-          <span>⚡ Power Outage: <strong className="text-civic-amber">1912</strong></span>
-          <span>💧 Water Leakage: <strong className="text-civic-amber">1916</strong></span>
+        <div className="mt-10 pt-8 border-t border-paper/10 flex flex-wrap gap-x-10 gap-y-3 font-mono text-[0.85rem] text-paper/70">
+          {secondary.map(([label, num]) => (
+            <span key={label}>
+              {label}: <strong className="text-civic-amber">{num}</strong>
+            </span>
+          ))}
+        </div>
+
+        {/* Smart Priority Alert System — live demo trigger.
+            Critical alerts jump the queue ahead of warning/info, and two
+            similar alerts fired close together merge into one card with
+            a count badge instead of stacking twice. */}
+        <div className="mt-10 pt-8 border-t border-paper/10">
+          <span className="font-mono text-[0.72rem] tracking-[0.14em] uppercase text-paper/50 block mb-3">
+            Smart Priority Alert System — try it
+          </span>
+          <div className="flex flex-wrap gap-2.5">
+            <button
+              type="button"
+              onClick={() => pushAlert(demoAlerts.critical)}
+              className="font-mono text-[0.78rem] font-semibold px-3.5 py-2 rounded bg-[#ff8a80]/15 text-[#ff8a80] hover:bg-[#ff8a80]/25 transition-colors"
+            >
+              Send Critical Alert
+            </button>
+            <button
+              type="button"
+              onClick={() => pushAlert(demoAlerts.warning)}
+              className="font-mono text-[0.78rem] font-semibold px-3.5 py-2 rounded bg-civic-amber/15 text-civic-amber hover:bg-civic-amber/25 transition-colors"
+            >
+              Send Warning Alert
+            </button>
+            <button
+              type="button"
+              onClick={() => pushAlert(demoAlerts.info)}
+              className="font-mono text-[0.78rem] font-semibold px-3.5 py-2 rounded bg-white/10 text-paper/80 hover:bg-white/15 transition-colors"
+            >
+              Send Info Alert
+            </button>
+            <button
+              type="button"
+              onClick={fireDuplicateBurst}
+              className="font-mono text-[0.78rem] font-semibold px-3.5 py-2 rounded bg-white/10 text-paper/80 hover:bg-white/15 transition-colors"
+            >
+              Simulate Duplicate Burst
+            </button>
+          </div>
         </div>
       </Container>
     </section>

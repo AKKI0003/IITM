@@ -216,3 +216,56 @@ Colors/fonts/spacing tokens live in `tailwind.config.js` (unchanged — `ink-nav
 
 - Only `Button`, the Gallery lightbox, and FAQ were migrated to the Radix/CVA "shadcn" pattern. Cards (Services/Departments/Transport/Events/News) still use the earlier hand-written Tailwind classes — functionally fine, just not yet re-expressed as `ui/card.jsx`. Say the word and I'll do that pass too.
 - Real shadcn CLI / skiper-ui / taste-skill / react-bits installs need network access this sandbox doesn't have — run those yourself locally if you want their exact upstream source rather than the hand-built equivalents here.
+
+---
+
+## 7. Bugfix — blank/white screen on load
+
+**Symptom:** the app rendered a blank white page. `vite build` still succeeded (esbuild doesn't catch this class of bug), but React threw at render time.
+
+**Cause:** `src/components/Contact.jsx` referenced `IconPin`, `IconPhone`, and `IconMail` inside its `rows` array with **no import at all** — they were undefined identifiers, so evaluating the module threw a `ReferenceError` and took the whole tree down with it (nothing after the crash point ever mounts, hence the plain white page rather than a partial render).
+
+**Fix:**
+- Added `import { IconPin, IconPhone, IconMail } from "./Icons";` to `Contact.jsx`.
+- Added `import IconBadge from "./IconBadge";` and actually render the icon on each row via `<IconBadge icon={r.icon} variant={r.variant} />` — previously `r.icon` was stored on each row object but never used in the JSX, so the icons were dead data even before the crash.
+- Cross-checked every other component for the same pattern (`Icon*` identifiers used without a matching import from `./Icons`) — nothing else was affected; `About.jsx` and `Footer.jsx` already imported correctly.
+
+If the screen ever goes blank white again: open the browser console first — a component throwing during render (undefined variable, calling `.map` on `undefined`, etc.) is the most common cause, and the stack trace names the file/line directly.
+
+---
+
+## 8. Smart Priority Alert System
+
+A floating, priority-ordered alert stack: **Critical** alerts jump ahead of **Warning**/**Info** alerts already in the queue, and near-duplicate alerts arriving close together merge into a single card with a `×N` count badge instead of stacking twice.
+
+### New files
+
+```
+src/
+  lib/
+    alertBus.js            # tiny pub/sub — pushAlert() / subscribeToAlerts()
+    alertQueue.js           # pure queue logic — priority ordering + merge rules
+  components/
+    alerts/
+      AlertStack.jsx       # floating UI, subscribes to the bus, renders the queue
+```
+
+### How it works
+
+1. **Publish** — anywhere in the app, call `pushAlert({ priority, title, message, category })` (imported from `src/lib/alertBus.js`). `priority` is `"critical" | "warning" | "info"`. `category` defaults to `title` and is what duplicate-matching keys off of.
+2. **Bus** (`alertBus.js`) — a `Set` of listener callbacks; `pushAlert` stamps an `id`/`createdAt` and notifies every subscriber. No React dependency, so any non-component code (a websocket handler, a polling hook, etc.) can push alerts too.
+3. **Queue engine** (`alertQueue.js`) — pure functions, no state of their own:
+   - `enqueueAlert(queue, incoming)` — if a recent (within `MERGE_WINDOW_MS`, 8s) alert with the same `category` + `priority` is already in the queue, it merges (`count++`, refreshes `lastSeenAt`) instead of adding a second card. Otherwise the alert is inserted **priority-sorted**: `critical` (weight 3) always ends up ahead of `warning` (2) and `info` (1); same-priority alerts keep arrival order.
+   - `dismissAlert(queue, id)` — removes one alert.
+4. **`AlertStack.jsx`** — the sole subscriber. Holds the queue in `useState`, feeds every incoming alert through `enqueueAlert`, and renders it fixed top-right (`z-[70]`, below the navbar) with Framer Motion `layout` animations so re-priority-ordering (a critical alert jumping to the top) animates instead of snapping. Each priority has its own accent color/auto-dismiss timing (critical: stays until dismissed; warning: 9s; info: 6s), reusing the `signal-red` / `civic-amber` / `transit-teal` tokens already in `tailwind.config.js`.
+
+### Wiring / demo
+
+- `AlertStack` is mounted once, globally, in `App.jsx` (right after `<Navbar />`, outside the scrollable section flow, since it's `position: fixed`).
+- `src/components/Emergency.jsx` has a small **"Smart Priority Alert System — try it"** control row (four buttons: Critical / Warning / Info / Simulate Duplicate Burst) so the behavior is directly testable on the live site — this is a demo trigger, not a real alert source. To wire it to something real (a websocket feed, a polling endpoint, a form submission), just call `pushAlert(...)` from that code path instead; `AlertStack` doesn't care where alerts come from.
+
+### Where to change things
+
+- Priority weights / merge time window → top of `src/lib/alertQueue.js` (`PRIORITY_WEIGHT`, `MERGE_WINDOW_MS`).
+- Auto-dismiss timing or colors per priority → top of `src/components/alerts/AlertStack.jsx` (`AUTO_DISMISS_MS`, `STYLES`).
+- Where the stack appears on screen → the outer `<div className="fixed top-[76px] right-4 ...">` in `AlertStack.jsx`.

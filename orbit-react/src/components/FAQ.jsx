@@ -35,7 +35,7 @@ export default function FAQ() {
             keyboard support (Home/End/Arrow keys), animated height via
             the --radix-accordion-content-height CSS var + keyframes
             defined in index.css. */}
-        <Accordion type="single" collapsible defaultValue="" className="grid gap-4 max-w-[820px]">
+        <Accordion type="single" collapsible defaultValue="" className="max-w-[820px] border-t border-line">
           {faqs.map((f, i) => (
             <AccordionItem key={f.q} value={`item-${i}`}>
               <AccordionTrigger>

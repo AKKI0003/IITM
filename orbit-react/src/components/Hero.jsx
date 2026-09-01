@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import Container from "./Container";
 import Button from "./Button";
-import RevealText from "./motion/RevealText";
 
 const stats = [
   ["1.8M", "Citizens Served"],
@@ -34,8 +33,7 @@ export default function Hero() {
       <Container className="relative">
         <motion.div
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
           className="flex items-center gap-2 mb-6 flex-wrap"
         >
@@ -45,14 +43,27 @@ export default function Hero() {
         </motion.div>
 
         <h1 className="font-display font-bold leading-[0.98] tracking-tight text-[2.6rem] sm:text-[4.2rem] lg:text-[5.6rem] max-w-[900px] text-paper">
-          <RevealText text="The city," as="span" className="block" />
-          <RevealText text="in motion." as="span" className="block text-civic-amber" delay={0.35} />
+          <motion.span
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="block"
+          >
+            The city,
+          </motion.span>
+          <motion.span
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+            className="block text-civic-amber"
+          >
+            in motion.
+          </motion.span>
         </h1>
 
         <motion.p
           initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.7 }}
           className="text-paper/70 text-[1.05rem] max-w-[480px] mt-8 leading-relaxed"
         >
@@ -62,8 +73,7 @@ export default function Hero() {
 
         <motion.div
           initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.85 }}
           className="flex gap-4 flex-wrap mt-9"
         >
@@ -77,8 +87,7 @@ export default function Hero() {
 
         <motion.div
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 1 }}
           className="flex flex-wrap gap-x-12 gap-y-5 mt-16 pt-8 border-t border-paper/10"
         >

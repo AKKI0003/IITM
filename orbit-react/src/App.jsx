@@ -14,14 +14,15 @@ import FAQ from "./components/FAQ";
 import Contact from "./components/Contact";
 import Feedback from "./components/Feedback";
 import Footer from "./components/Footer";
+import AlertStack from "./components/alerts/AlertStack";
 import Reveal from "./components/ui/reveal";
 import SectionDivider from "./components/ui/section-divider";
 
-// Paper/mist hex values must match the Tailwind tokens in
-// tailwind.config.js (colors.paper / colors.mist) since inline SVG
+// Paper/ink hex values must match the Tailwind tokens in
+// tailwind.config.js (colors.paper / colors.ink-navy) since inline SVG
 // `fill` can't read Tailwind's CSS variables directly.
-const PAPER = "#FBFBF9";
-const MIST = "#EEF1F0";
+const PAPER = "#FAF8F3";
+const INK_NAVY = "#101B2D";
 
 export default function App() {
   return (
@@ -30,6 +31,9 @@ export default function App() {
           everything else is pushed down to clear it instead of sitting
           in normal document flow above it. */}
       <Navbar />
+      {/* Floating, fixed-position — lives outside the section flow so it
+          can appear over any part of the page. */}
+      <AlertStack />
       <div className="pt-[60px] sm:pt-[76px]">
         <NoticeBanner />
 
@@ -46,7 +50,7 @@ export default function App() {
 
       {/* Emergency is also full-bleed ink-navy — bridge in both
           directions so it doesn't feel like a dropped-in black box. */}
-      <SectionDivider to="#0E1B2B" flip />
+      <SectionDivider to="#101B2D" flip />
       <Emergency />
       <SectionDivider to={PAPER} />
 
