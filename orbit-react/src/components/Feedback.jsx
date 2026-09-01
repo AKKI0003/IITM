@@ -12,7 +12,7 @@ export default function Feedback() {
   const [rating, setRating] = useState(5);
 
   return (
-    <section id="feedback" className="py-16 lg:py-section bg-mist/50">
+    <section id="feedback" className="py-16 lg:py-section">
       <Container>
         <SectionHeader
           eyebrow="Citizen Grievance & Feedback"

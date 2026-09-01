@@ -26,6 +26,7 @@ export default {
       },
       fontFamily: {
         display: ['"Space Grotesk"', '"Segoe UI"', "sans-serif"],
+        serif: ['"Fraunces"', "Georgia", "serif"],
         body: ['"IBM Plex Sans"', '"Segoe UI"', "sans-serif"],
         mono: ['"IBM Plex Mono"', '"Courier New"', "monospace"],
       },

@@ -20,7 +20,7 @@ export default function Departments() {
   );
 
   return (
-    <section id="departments" className="py-16 lg:py-section bg-mist">
+    <section id="departments" className="py-16 lg:py-section">
       <Container>
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12">
           <SectionHeader

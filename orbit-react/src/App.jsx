@@ -42,7 +42,9 @@ export default function App() {
         <Hero />
         <SectionDivider to={PAPER} />
 
-      <About />
+      <Reveal>
+        <About />
+      </Reveal>
 
       <Reveal>
         <Services />

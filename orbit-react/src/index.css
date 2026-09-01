@@ -14,12 +14,43 @@ html {
 
 body {
   @apply font-body text-slate bg-paper antialiased;
-  line-height: 1.6;
+  line-height: 1.65;
+  font-feature-settings: "ss01" 1;
 }
 
 h1, h2, h3, h4 {
-  @apply font-display text-ink-navy;
-  line-height: 1.15;
+  @apply font-serif text-ink-navy;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+::selection {
+  background-color: #D9922F;
+  color: #101B2D;
+}
+
+:focus-visible {
+  outline: 2px solid #D9922F;
+  outline-offset: 2px;
+}
+
+/* Thin, unobtrusive scrollbar — reinforces the editorial, considered feel
+   instead of the default chunky browser bar. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF8F3;
+}
+::-webkit-scrollbar-thumb {
+  background: #E7E1D4;
+  border-radius: 999px;
+  border: 2px solid #FAF8F3;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D9922F;
 }
 
 a {

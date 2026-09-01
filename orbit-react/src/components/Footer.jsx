@@ -1,9 +1,53 @@
 import Container from "./Container";
+import Button from "./Button";
+import Grainient from "./Grainient";
 import { IconTwitter, IconFb, IconInsta } from "./Icons";
+
+function CtaBand() {
+  return (
+    <section className="relative overflow-hidden bg-ink-navy text-paper py-20 sm:py-28">
+      <div className="absolute inset-0" aria-hidden="true">
+        <Grainient
+          color1="#2A1B5E"
+          color2="#0A0E1F"
+          color3="#FF7A45"
+          timeSpeed={0.24}
+          warpStrength={1.35}
+          warpAmplitude={58}
+          warpFrequency={3.8}
+          warpSpeed={2.2}
+          grainAmount={0.09}
+          contrast={1.5}
+          saturation={1.4}
+          zoom={1.5}
+          centerY={0.15}
+        />
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-ink-navy via-ink-navy/60 to-ink-navy/30 pointer-events-none" aria-hidden="true" />
+      <Container className="relative text-center">
+        <span className="font-mono text-[0.72rem] tracking-[0.16em] uppercase text-civic-amber-soft/80 border border-civic-amber-soft/20 rounded-full px-3 py-1 backdrop-blur-sm">
+          Get Started
+        </span>
+        <h2 className="font-serif font-medium text-[2.2rem] sm:text-[3.4rem] leading-[1.02] tracking-[-0.02em] mt-5 max-w-[720px] mx-auto">
+          Every civic service, <span className="italic text-civic-amber">one login away.</span>
+        </h2>
+        <p className="text-paper/65 text-[1.02rem] max-w-[480px] mx-auto mt-5">
+          Create your citizen account to pay bills, track grievances, and receive priority alerts for your ward.
+        </p>
+        <div className="flex gap-4 flex-wrap justify-center mt-9">
+          <Button href="#services" variant="primary">Create Citizen Account</Button>
+          <Button href="#contact" variant="ghost">Talk to the Helpdesk</Button>
+        </div>
+      </Container>
+    </section>
+  );
+}
 
 export default function Footer() {
   return (
-    <footer className="bg-ink-navy text-paper/70 pt-16 pb-7">
+    <>
+      <CtaBand />
+      <footer className="bg-ink-navy text-paper/70 pt-16 pb-7 border-t border-paper/[.06]">
       <Container>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] gap-9 pb-10 border-b border-paper/[.08]">
           <div>
@@ -86,5 +130,6 @@ export default function Footer() {
         </div>
       </Container>
     </footer>
+    </>
   );
 }

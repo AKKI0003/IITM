@@ -37,7 +37,7 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="py-16 lg:py-section">
+    <section id="services" className="py-16 lg:py-section bg-mist">
       <Container>
         <SectionHeader
           eyebrow="Citizen Services"

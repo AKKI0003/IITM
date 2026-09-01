@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Container from "./Container";
 import Button from "./Button";
+import Grainient from "./Grainient";
 
 const stats = [
   ["1.8M", "Citizens Served"],
@@ -11,38 +12,44 @@ const stats = [
 
 export default function Hero() {
   return (
-    <section id="home" className="relative bg-ink-navy text-paper pt-16 sm:pt-24 pb-20 overflow-hidden">
-      {/* Subtle topographic backdrop instead of a gradient blob. */}
-      <svg
-        className="absolute inset-0 w-full h-full opacity-[0.07] pointer-events-none"
-        viewBox="0 0 800 500"
-        preserveAspectRatio="xMidYMid slice"
-        aria-hidden="true"
-      >
-        {[0, 1, 2, 3, 4, 5].map((i) => (
-          <path
-            key={i}
-            d={`M-50 ${80 + i * 70} C 200 ${20 + i * 70}, 500 ${140 + i * 70}, 850 ${60 + i * 70}`}
-            stroke="#F2D9AE"
-            strokeWidth="1"
-            fill="none"
-          />
-        ))}
-      </svg>
+    <section id="home" className="relative bg-ink-navy text-paper pt-16 sm:pt-24 pb-20 overflow-hidden min-h-[92vh] flex items-center">
+      {/* Immersive animated gradient field, tuned to the site's ink-navy /
+          civic-amber palette instead of the library default violet. */}
+      <div className="absolute inset-0" aria-hidden="true">
+        <Grainient
+          color1="#2A1B5E"
+          color2="#0A0E1F"
+          color3="#FF7A45"
+          timeSpeed={0.32}
+          warpStrength={1.7}
+          warpAmplitude={78}
+          warpFrequency={3.6}
+          warpSpeed={2.6}
+          grainAmount={0.1}
+          contrast={1.65}
+          saturation={1.5}
+          rotationAmount={420}
+          zoom={1.3}
+        />
+      </div>
+      {/* Legibility scrim so body copy and buttons stay readable over the
+          moving gradient. */}
+      <div className="absolute inset-0 bg-gradient-to-b from-ink-navy/30 via-ink-navy/50 to-ink-navy pointer-events-none" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-r from-ink-navy/40 via-transparent to-ink-navy/15 pointer-events-none" aria-hidden="true" />
 
       <Container className="relative">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="flex items-center gap-2 mb-6 flex-wrap"
+          className="flex items-center gap-2 mb-7 flex-wrap"
         >
-          <span className="font-mono text-[0.7rem] tracking-[0.16em] uppercase text-civic-amber-soft/80">
+          <span className="font-mono text-[0.7rem] tracking-[0.16em] uppercase text-civic-amber-soft/80 border border-civic-amber-soft/20 rounded-full px-3 py-1 backdrop-blur-sm">
             Smart City · India
           </span>
         </motion.div>
 
-        <h1 className="font-display font-bold leading-[0.98] tracking-tight text-[2.6rem] sm:text-[4.2rem] lg:text-[5.6rem] max-w-[900px] text-paper">
+        <h1 className="font-serif font-medium leading-[0.96] tracking-[-0.02em] text-[2.9rem] sm:text-[4.6rem] lg:text-[6.2rem] max-w-[960px] text-paper">
           <motion.span
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -55,7 +62,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-            className="block text-civic-amber"
+            className="block italic text-civic-amber font-normal"
           >
             in motion.
           </motion.span>
@@ -65,7 +72,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.7 }}
-          className="text-paper/70 text-[1.05rem] max-w-[480px] mt-8 leading-relaxed"
+          className="text-paper/70 text-[1.1rem] max-w-[480px] mt-8 leading-relaxed"
         >
           One unified portal for every city service — pay property taxes, track buses in real time,
           download verified DigiLocker certificates, and file grievances from Orbit Smart City.

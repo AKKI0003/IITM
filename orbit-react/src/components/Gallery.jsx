@@ -149,7 +149,7 @@ export default function Gallery() {
   const prev = useCallback(() => setActiveIndex((i) => (i === null ? i : (i - 1 + items.length) % items.length)), []);
 
   return (
-    <section id="gallery" className="py-16 lg:py-section">
+    <section id="gallery" className="py-16 lg:py-section bg-mist">
       <Container>
         <SectionHeader
           eyebrow="Gallery"

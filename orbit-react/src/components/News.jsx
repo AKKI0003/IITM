@@ -27,7 +27,7 @@ export default function News() {
   const [featured, ...rest] = news;
 
   return (
-    <section id="news" className="py-16 lg:py-section">
+    <section id="news" className="py-16 lg:py-section bg-mist">
       <Container>
         <SectionHeader
           eyebrow="News & Press Releases"
