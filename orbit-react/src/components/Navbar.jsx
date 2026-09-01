@@ -97,7 +97,7 @@ export default function Navbar() {
         transition={{ type: "spring", stiffness: 280, damping: 30 }}
         className={`pointer-events-auto mt-0 sm:mt-4 w-full ${
           scrolled ? "sm:max-w-[960px]" : "sm:max-w-[1180px]"
-        } bg-ink-navy/35 backdrop-blur-md sm:rounded-full ring-1 ring-paper/[.08] shadow-[0_8px_30px_-8px_rgba(16,27,45,0.4)] relative before:absolute before:inset-0 before:sm:rounded-full before:bg-gradient-to-r before:from-civic-amber/[.06] before:via-transparent before:to-civic-amber/[.06] before:pointer-events-none transition-[max-width] duration-500`}
+        } bg-ink-navy/85 backdrop-blur-xl sm:rounded-full ring-1 ring-paper/[.08] shadow-[0_8px_30px_-8px_rgba(16,27,45,0.55)] relative before:absolute before:inset-0 before:sm:rounded-full before:bg-gradient-to-r before:from-civic-amber/[.06] before:via-transparent before:to-civic-amber/[.06] before:pointer-events-none transition-[max-width] duration-500`}
       >
         <Container className="flex items-center justify-between gap-3 py-2.5 sm:!px-4">
           <a href="#home" className="flex items-center gap-2.5 text-paper group flex-shrink-0">

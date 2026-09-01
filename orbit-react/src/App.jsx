@@ -34,9 +34,11 @@ export default function App() {
       {/* Floating, fixed-position — lives outside the section flow so it
           can appear over any part of the page. */}
       <AlertStack />
+      {/* Also floating/fixed — a collapsed badge that expands on demand,
+          so the live-advisory feed never reserves layout height or pushes
+          Hero (or anything else) down the page. */}
+      <NoticeBanner />
       <div className="pt-[60px] sm:pt-[76px]">
-        <NoticeBanner />
-
         {/* Hero is full-bleed ink-navy; divider bridges it into the
             paper-toned About section instead of a hard 1px cut. */}
         <Hero />

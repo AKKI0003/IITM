@@ -26,7 +26,7 @@ const items = [
   {
     label: "Metro Interchange Station",
     category: "Transit",
-    image: "https://swarajya.gumlet.io/swarajya/2023-10/0c3177f5-a85f-461d-8523-d08a2f72e521/GettyImages_168355676.jpg?w=610&q=75&compress=true&format=auto",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X1o_z3DYHiY7r-ORl2bUNAgU_PBQsjBJqyc6w4LKIA&s=10",
     description: "High-speed multimodal transit hub connecting all 12 wards",
   },
   {

@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import Container from "./Container";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { IconAlert, IconPhone } from "./Icons";
 
 const advisories = [
@@ -8,72 +8,97 @@ const advisories = [
   "Property tax early-bird rebate window closes March 31 — file online to save 5%.",
 ];
 
+// Floating, fixed-position widget — lives OUTSIDE normal document flow, so
+// it can never push Hero (or any section) down or eat layout height. It
+// starts collapsed to a small pulsing badge and expands into the advisory
+// panel on hover/click, then auto-collapses again. This keeps the "live"
+// signal always visible without the full-width bar disrupting the page.
 export default function NoticeBanner() {
-  // Duplicate the strip once so the marquee loop is seamless (the second
-  // copy picks up exactly where the first leaves off, no visible jump).
-  const strip = [...advisories, ...advisories];
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative bg-ink-navy text-paper border-b border-civic-amber/20 overflow-hidden">
-      {/* Thin animated gradient hairline instead of a flat 1px border —
-          a small signal that the whole page is "alive", not static. */}
-      <motion.div
-        aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-civic-amber to-transparent"
-        style={{ backgroundSize: "200% 100%" }}
-        animate={{ backgroundPositionX: ["0%", "200%"] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-      />
-
-      <Container className="flex items-stretch gap-4 py-0">
-        {/* Fixed "live advisory" badge, never scrolls — anchors the strip. */}
-        <div className="hidden sm:flex items-center gap-2 pr-4 border-r border-paper/10 flex-shrink-0 py-2.5">
-          <span className="relative flex-shrink-0 w-6 h-6 rounded-full bg-civic-amber/15 text-civic-amber flex items-center justify-center">
-            <IconAlert className="w-3.5 h-3.5" />
-            <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-civic-amber animate-ping" aria-hidden="true" />
-            <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-civic-amber" aria-hidden="true" />
-          </span>
-          <span className="font-mono text-[0.68rem] uppercase tracking-[0.12em] text-civic-amber whitespace-nowrap">
-            Live Advisory
-          </span>
-        </div>
-
-        {/* Continuously scrolling marquee — edge-faded so it dissolves
-            into the bar rather than hard-cutting mid-sentence. */}
-        <div className="flex-1 min-w-0 py-2.5 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_24px,black_calc(100%-24px),transparent)]">
+    <div
+      className="fixed z-40 bottom-5 left-4 sm:bottom-6 sm:left-6"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <AnimatePresence mode="wait">
+        {open ? (
           <motion.div
-            className="flex items-center gap-10 whitespace-nowrap font-mono text-[0.78rem] text-paper/80"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+            key="panel"
+            initial={{ opacity: 0, scale: 0.94, y: 8 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 8 }}
+            transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+            className="w-[min(90vw,360px)] rounded-2xl bg-ink-navy text-paper border border-civic-amber/25 shadow-2xl shadow-black/40 overflow-hidden"
           >
-            {strip.map((text, i) => (
-              <span key={i} className="flex items-center gap-2 flex-shrink-0">
-                <span className="w-1 h-1 rounded-full bg-civic-amber/60 flex-shrink-0" aria-hidden="true" />
-                {text}
+            <div className="flex items-center gap-2 px-4 pt-3.5 pb-2.5 border-b border-paper/10">
+              <span className="relative flex-shrink-0 w-5 h-5 rounded-full bg-civic-amber/15 text-civic-amber flex items-center justify-center">
+                <IconAlert className="w-3 h-3" />
+                <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-civic-amber animate-ping" aria-hidden="true" />
+                <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-civic-amber" aria-hidden="true" />
               </span>
-            ))}
-          </motion.div>
-        </div>
+              <span className="font-mono text-[0.66rem] uppercase tracking-[0.12em] text-civic-amber">
+                Live Advisory
+              </span>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="ml-auto text-paper/40 hover:text-paper/80 transition-colors text-xs font-mono"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
 
-        {/* Fixed contact pills, never scroll — the numbers you actually
-            need in an emergency shouldn't be mid-animation. */}
-        <div className="hidden md:flex items-center gap-2 pl-4 border-l border-paper/10 flex-shrink-0 py-2">
-          <a
-            href="tel:18004252026"
-            className="flex items-center gap-1.5 font-mono text-[0.72rem] text-paper/70 hover:text-paper bg-paper/[.05] hover:bg-paper/[.09] px-2.5 py-1 rounded-full transition-colors whitespace-nowrap"
+            <ul className="max-h-[45vh] overflow-y-auto px-4 py-3 flex flex-col gap-3">
+              {advisories.map((text, i) => (
+                <li key={i} className="flex gap-2 text-[0.78rem] leading-relaxed text-paper/80">
+                  <span className="w-1 h-1 mt-2 rounded-full bg-civic-amber/60 flex-shrink-0" aria-hidden="true" />
+                  {text}
+                </li>
+              ))}
+            </ul>
+
+            <div className="flex items-center gap-2 px-4 py-3 border-t border-paper/10 bg-paper/[.03]">
+              <a
+                href="tel:18004252026"
+                className="flex items-center gap-1.5 font-mono text-[0.7rem] text-paper/70 hover:text-paper bg-paper/[.05] hover:bg-paper/[.09] px-2.5 py-1 rounded-full transition-colors whitespace-nowrap"
+              >
+                <IconPhone className="w-3 h-3" />
+                1800-425-2026
+              </a>
+              <a
+                href="tel:112"
+                className="flex items-center gap-1.5 font-mono text-[0.7rem] font-bold text-ink-navy bg-civic-amber hover:bg-civic-amber-dark px-2.5 py-1 rounded-full transition-colors whitespace-nowrap"
+              >
+                <IconAlert className="w-3 h-3" />
+                112
+              </a>
+            </div>
+          </motion.div>
+        ) : (
+          <motion.button
+            key="badge"
+            type="button"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.18 }}
+            onClick={() => setOpen(true)}
+            className="flex items-center gap-2 rounded-full bg-ink-navy text-paper border border-civic-amber/30 shadow-lg shadow-black/30 pl-2.5 pr-3.5 py-2 backdrop-blur-sm hover:border-civic-amber/60 transition-colors"
           >
-            <IconPhone className="w-3 h-3" />
-            1800-425-2026
-          </a>
-          <a
-            href="tel:112"
-            className="flex items-center gap-1.5 font-mono text-[0.72rem] font-bold text-ink-navy bg-civic-amber hover:bg-civic-amber-dark px-2.5 py-1 rounded-full transition-colors whitespace-nowrap"
-          >
-            <IconAlert className="w-3 h-3" />
-            112
-          </a>
-        </div>
-      </Container>
+            <span className="relative flex-shrink-0 w-5 h-5 rounded-full bg-civic-amber/15 text-civic-amber flex items-center justify-center">
+              <IconAlert className="w-3 h-3" />
+              <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-civic-amber animate-ping" aria-hidden="true" />
+              <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-civic-amber" aria-hidden="true" />
+            </span>
+            <span className="font-mono text-[0.64rem] uppercase tracking-[0.1em] text-civic-amber whitespace-nowrap">
+              {advisories.length} Live Advisories
+            </span>
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
