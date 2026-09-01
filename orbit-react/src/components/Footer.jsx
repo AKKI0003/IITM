@@ -9,7 +9,7 @@ function CtaBand() {
       <div className="absolute inset-0" aria-hidden="true">
         <Grainient
           color1="#2A1B5E"
-          color2="#0A0E1F"
+          color2="#b4b6be"
           color3="#FF7A45"
           timeSpeed={0.24}
           warpStrength={1.35}
