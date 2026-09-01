@@ -26,13 +26,17 @@ const MIST = "#EEF1F0";
 export default function App() {
   return (
     <>
-      <NoticeBanner />
+      {/* Navbar now floats as a fixed overlay (dynamic-island style), so
+          everything else is pushed down to clear it instead of sitting
+          in normal document flow above it. */}
       <Navbar />
+      <div className="pt-[60px] sm:pt-[76px]">
+        <NoticeBanner />
 
-      {/* Hero is full-bleed ink-navy; divider bridges it into the
-          paper-toned About section instead of a hard 1px cut. */}
-      <Hero />
-      <SectionDivider to={PAPER} />
+        {/* Hero is full-bleed ink-navy; divider bridges it into the
+            paper-toned About section instead of a hard 1px cut. */}
+        <Hero />
+        <SectionDivider to={PAPER} />
 
       <About />
 
@@ -74,6 +78,7 @@ export default function App() {
         <Feedback />
       </Reveal>
       <Footer />
+      </div>
     </>
   );
 }

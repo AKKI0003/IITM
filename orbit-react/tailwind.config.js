@@ -4,18 +4,25 @@ export default {
   theme: {
     extend: {
       colors: {
-        "ink-navy": "#0E1B2B",
-        "ink-navy-soft": "#16283F",
-        "civic-amber": "#F2A93B",
-        "civic-amber-dark": "#D68F22",
-        "transit-teal": "#1E7A6C",
-        "transit-teal-dark": "#145F54",
-        "signal-red": "#D8483F",
-        mist: "#EEF1F0",
-        paper: "#FBFBF9",
-        slate: "#4A5560",
-        "slate-light": "#7A8790",
-        line: "#DDE3E1",
+        // One cohesive palette: deep ink navy + a single warm accent,
+        // built on warm neutrals so every section reads as one family.
+        "ink-navy": "#101B2D",
+        "ink-navy-soft": "#182946",
+        "civic-amber": "#D9922F",
+        "civic-amber-dark": "#B87620",
+        "civic-amber-soft": "#F2D9AE",
+        // kept as aliases so existing components referencing the old
+        // teal/transit tokens still resolve to the new single accent
+        "transit-teal": "#182946",
+        "transit-teal-dark": "#101B2D",
+        "signal-red": "#B8483C",
+        "civic-steel": "#5C7A93",
+        "civic-moss": "#71805B",
+        mist: "#F3F0E9",
+        paper: "#FAF8F3",
+        slate: "#4B5360",
+        "slate-light": "#848C96",
+        line: "#E7E1D4",
       },
       fontFamily: {
         display: ['"Space Grotesk"', '"Segoe UI"', "sans-serif"],
