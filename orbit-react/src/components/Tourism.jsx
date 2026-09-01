@@ -66,7 +66,7 @@ export default function Tourism() {
           {items.map((t) => (
             <div
               key={t.title}
-              className="group rounded-lg overflow-hidden border border-line bg-paper shadow-sm hover:shadow-md transition-all duration-300 flex flex-col"
+              className="group rounded-xl overflow-hidden border border-line bg-paper shadow-sm hover:shadow-md transition-all duration-300 flex flex-col"
             >
               <div className="relative h-[200px] overflow-hidden bg-ink-navy">
                 <img

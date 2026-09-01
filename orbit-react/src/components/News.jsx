@@ -37,7 +37,7 @@ export default function News() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr_1fr] gap-6">
           {news.map((n) => (
-            <div key={n.title} className="bg-paper border border-line rounded-lg p-6 flex flex-col justify-between shadow-xs hover:shadow-md transition-shadow">
+            <div key={n.title} className="bg-paper border border-line rounded-xl p-6 flex flex-col justify-between shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
               <div>
                 <span className={`inline-block font-mono text-[0.68rem] uppercase font-semibold tracking-[0.06em] px-2.5 py-0.5 rounded-full ${n.badgeColor}`}>
                   {n.tag}

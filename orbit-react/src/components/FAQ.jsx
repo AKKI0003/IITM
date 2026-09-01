@@ -32,7 +32,7 @@ export default function FAQ() {
 
         <div className="grid gap-4 max-w-[820px]">
           {faqs.map((f) => (
-            <div key={f.q} className="border border-line rounded-lg px-6 py-5 bg-paper shadow-xs hover:border-transit-teal/40 transition-colors">
+            <div key={f.q} className="border border-line rounded-xl px-6 py-5 bg-paper shadow-xs hover:border-transit-teal/40 transition-colors">
               <h3 className="text-[1.02rem] font-display font-semibold text-ink-navy mb-2.5 flex gap-2.5 items-start">
                 <span className="font-mono text-civic-amber-dark font-bold text-lg leading-none mt-0.5">Q.</span>
                 <span>{f.q}</span>

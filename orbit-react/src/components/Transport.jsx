@@ -48,7 +48,7 @@ export default function Transport() {
           {items.map((t) => (
             <div
               key={t.title}
-              className="bg-paper border border-line rounded-lg p-6 flex flex-col justify-between shadow-xs hover:shadow-md transition-shadow"
+              className="group bg-paper border border-line rounded-xl p-6 flex flex-col justify-between shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">

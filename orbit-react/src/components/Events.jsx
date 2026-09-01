@@ -51,9 +51,9 @@ export default function Events() {
           {events.map((e) => (
             <div
               key={e.title}
-              className="grid grid-cols-[72px_1fr] sm:grid-cols-[92px_1fr_auto] gap-[22px] items-center bg-paper border border-line rounded-lg px-6 py-5 hover:border-transit-teal/50 shadow-xs hover:shadow-sm transition-all"
+              className="grid grid-cols-[72px_1fr] sm:grid-cols-[92px_1fr_auto] gap-[22px] items-center bg-paper border border-line rounded-xl px-6 py-5 hover:border-transit-teal/50 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
             >
-              <div className="bg-gradient-to-b from-mist to-paper rounded-md border border-line text-center py-[10px] font-mono shadow-xs">
+              <div className="bg-gradient-to-b from-mist to-paper rounded-lg border border-line text-center py-[10px] font-mono shadow-xs">
                 <span className="block text-[1.4rem] font-bold text-ink-navy">{e.day}</span>
                 <span className="block text-[0.7rem] tracking-[0.1em] text-transit-teal uppercase font-bold">{e.month}</span>
               </div>

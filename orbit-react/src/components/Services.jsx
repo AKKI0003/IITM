@@ -62,7 +62,7 @@ export default function Services() {
           {services.map((s) => (
             <div
               key={s.title}
-              className="bg-paper border border-line border-l-[4px] border-l-transit-teal rounded-lg p-7 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+              className="group bg-paper border border-line border-l-[4px] border-l-transit-teal rounded-xl p-7 shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
                 <IconBadge icon={s.icon} variant={s.variant} />

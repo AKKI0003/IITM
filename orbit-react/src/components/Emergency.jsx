@@ -26,7 +26,7 @@ export default function Emergency() {
           {items.map((e) => (
             <div
               key={e.title}
-              className="bg-ink-navy-soft border border-white/[.08] rounded-lg p-6 text-center hover:border-signal-red/50 transition-colors flex flex-col justify-between"
+              className="bg-ink-navy-soft border border-white/[.08] rounded-xl p-6 text-center hover:border-signal-red/50 transition-colors flex flex-col justify-between"
             >
               <div>
                 <div className="w-[48px] h-[48px] rounded-[10px] flex items-center justify-center bg-signal-red/[.16] text-[#ff8a80] mx-auto mb-4">
@@ -47,7 +47,7 @@ export default function Emergency() {
           ))}
         </div>
 
-        <div className="mt-8 p-4 rounded-lg bg-ink-navy-soft/60 border border-white/[.06] flex flex-wrap items-center justify-between gap-4 text-[0.85rem] text-paper/70 font-mono">
+        <div className="mt-8 p-4 rounded-xl bg-ink-navy-soft/60 border border-white/[.06] flex flex-wrap items-center justify-between gap-4 text-[0.85rem] text-paper/70 font-mono">
           <span>👩 Women Helpline: <strong className="text-civic-amber">1091 / 181</strong></span>
           <span>👶 Childline: <strong className="text-civic-amber">1098</strong></span>
           <span>⚡ Power Outage: <strong className="text-civic-amber">1912</strong></span>

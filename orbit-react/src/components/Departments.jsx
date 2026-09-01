@@ -26,7 +26,7 @@ export default function Departments() {
           {depts.map((d) => (
             <div
               key={d.title}
-              className="text-center px-4 py-6 border border-line rounded-lg bg-paper shadow-xs hover:border-transit-teal/50 hover:shadow-sm transition-all flex flex-col justify-between items-center"
+              className="group text-center px-4 py-6 border border-line rounded-xl bg-paper shadow-xs hover:border-transit-teal/50 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between items-center"
             >
               <div>
                 <IconBadge icon={d.icon} variant={d.variant} className="mx-auto mb-3" />

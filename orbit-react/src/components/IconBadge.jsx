@@ -8,7 +8,7 @@ const variantClasses = {
 
 export default function IconBadge({ icon: Icon, variant = "teal", className = "" }) {
   return (
-    <div className={`w-[46px] h-[46px] rounded-[10px] flex items-center justify-center ${variantClasses[variant]} ${className}`}>
+    <div className={`w-[46px] h-[46px] rounded-xl flex items-center justify-center ring-1 ring-inset ring-black/5 transition-transform duration-200 group-hover:scale-105 group-hover:-rotate-3 ${variantClasses[variant]} ${className}`}>
       <Icon className="w-[22px] h-[22px]" />
     </div>
   );
